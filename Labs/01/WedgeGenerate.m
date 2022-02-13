@@ -10,6 +10,21 @@ https://www.mathworks.com/help/matlab/ref/rem.html
 Ones matrix generation
 https://www.mathworks.com/help/matlab/ref/ones.html
 
+Accessing specific column range in an array
+https://www.mathworks.com/matlabcentral/answers/333727-specific-column-range-from-an-array
+
+Determining sum of elements in a matrix
+https://www.mathworks.com/help/matlab/ref/sum.html
+
+Using fprintf
+https://www.mathworks.com/help/matlab/ref/fprintf.html
+
+Rounding values in MATLAB
+https://www.mathworks.com/help/matlab/ref/round.html
+
+Accessing the size of an array in MATLAB
+https://www.mathworks.com/help/matlab/ref/size.html
+
 %}
 
 %{
