@@ -4,6 +4,9 @@ clear all;
 Creating greyscale image
 https://www.mathworks.com/matlabcentral/answers/108006-how-to-create-a-gray-scale-image
 
+Converting image to type uint8
+https://www.mathworks.com/help/images/ref/im2uint8.html
+
 Remainder
 https://www.mathworks.com/help/matlab/ref/rem.html
 
@@ -33,6 +36,12 @@ https://www.mathworks.com/help/matlab/ref/rem.html
 
 Binarize an image from grayscale
 https://www.mathworks.com/help/images/ref/imbinarize.html
+
+Using progress bar (waitbar)
+https://www.mathworks.com/help/matlab/ref/waitbar.html
+
+Special characters in waitbar
+https://www.mathworks.com/matlabcentral/answers/376325-how-to-write-percentage-sign-into-a-txt-file
 %}
 
 inputMatrixA = im2uint8(imread("Fig0225(a)(face).tif"));
