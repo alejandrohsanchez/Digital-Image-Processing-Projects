@@ -35,20 +35,28 @@ Binarize an image from grayscale
 https://www.mathworks.com/help/images/ref/imbinarize.html
 %}
 
-inputMatrixA = imread("Fig0225(a)(face).tif");
+inputMatrixA = im2uint8(imread("Fig0225(a)(face).tif"));
 outputMatrixA = halftone(inputMatrixA);
 figure()
 imshow(outputMatrixA);
 
-inputMatrixB = imread("Fig0225(b)(cameraman).tif");
+inputMatrixB = im2uint8(imread("Fig0225(b)(cameraman).tif"));
 outputMatrixB = halftone(inputMatrixB);
 figure()
 imshow(outputMatrixB);
 
-inputMatrixC = imread("Fig0225(c)(crowd).tif");
+inputMatrixC = im2uint8(imread("Fig0225(c)(crowd).tif"));
 outputMatrixC = halftone(inputMatrixC);
 figure()
 imshow(outputMatrixC);
+%{
+%% Input any image you want to test the halftone function
+inputMatrixX = imread("test.jpg");
+outputMatrixX = halftone(rgb2gray(inputMatrixX));
+figure()
+imshow(outputMatrixX);
+%%
+%}
 
 %{
 Write a test script that generates a test pattern image consisting of
@@ -57,9 +65,10 @@ row is all 1, and so on, with the last row being 255.
 %}
 
 inputWedge = zeros(256,256);
+inputWedge = im2uint8(inputWedge);
 val = 256;
-for rows = 1:256
-    for cols = 1:256
+for rows = 1:val
+    for cols = 1:val
         inputWedge(rows,cols) = rows-1;
     end
 end
@@ -67,8 +76,9 @@ outputWedge = halftone(inputWedge);
 figure()
 imshow(outputWedge);
 
-function output = halftone(image)
-    A = uint8(image);
+%% FUNCTION SCRIPT
+function output = halftone(inputImage)
+    A = inputImage;
     % Number of pixel rows and columns in the image
     rows = size(A,1);
     cols = size(A,2);
@@ -88,10 +98,14 @@ function output = halftone(image)
     dot2 = [255 0 255; 255 255 255; 255 255 0];
     dot1 = [255 0 255; 255 255 255; 255 255 255];
     dot0 = [255 255 255; 255 255 255; 255 255 255];
+    
+    f = waitbar(0, "Processing");
 
     right_edge_catch = false;
-
+    % LEFT-RIGHT TRANSFORM
     for row_idx = 1:3:rows
+        waitbar(row_idx/rows,f,sprintf("Processing %.f%%", (row_idx/rows)*100));
+        pause(0);
         right_edge_corrected = false;
         for col_idx = 1:3:cols
             if (right_edge_catch == false && col_idx+2<=cols && row_idx+2<=rows)
@@ -220,6 +234,7 @@ function output = halftone(image)
                     A(row_idx:row_idx+2,col_idx:col_idx+2) = dot0;
                    
                 end
+            % BOTTOM-RIGHT CORNER TRANSFORM
             else
                 PXL_AVG = round(mean(A(rows-2:rows,cols-2:cols), "all"));
                
@@ -257,5 +272,6 @@ function output = halftone(image)
             end
         end
     end
+    delete(f)
     output = imbinarize(A);
 end
