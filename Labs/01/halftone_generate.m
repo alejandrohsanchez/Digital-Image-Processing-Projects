@@ -45,27 +45,9 @@ https://www.mathworks.com/matlabcentral/answers/376325-how-to-write-percentage-s
 %}
 
 inputMatrixA = im2uint8(imread("Fig0225(a)(face).tif"));
-outputMatrixA = halftone(inputMatrixA);
-figure()
-imshow(outputMatrixA);
-
 inputMatrixB = im2uint8(imread("Fig0225(b)(cameraman).tif"));
-outputMatrixB = halftone(inputMatrixB);
-figure()
-imshow(outputMatrixB);
-
 inputMatrixC = im2uint8(imread("Fig0225(c)(crowd).tif"));
-outputMatrixC = halftone(inputMatrixC);
-figure()
-imshow(outputMatrixC);
-%{
-%% Input any image you want to test the halftone function
-inputMatrixX = imread("test.jpg");
-outputMatrixX = halftone(rgb2gray(inputMatrixX));
-figure()
-imshow(outputMatrixX);
-%%
-%}
+inputMatrixX = imread("test.jpg"); % TEST IMAGE
 
 %{
 Write a test script that generates a test pattern image consisting of
@@ -81,7 +63,20 @@ for rows = 1:val
         inputWedge(rows,cols) = rows-1;
     end
 end
+outputMatrixA = halftone(inputMatrixA);
+outputMatrixB = halftone(inputMatrixB);
+outputMatrixC = halftone(inputMatrixC);
+outputMatrixX = halftone(rgb2gray(inputMatrixX)); % TEST IMAGE
 outputWedge = halftone(inputWedge);
+
+figure()
+imshow(outputMatrixA);
+figure()
+imshow(outputMatrixB);
+figure()
+imshow(outputMatrixC);
+figure()
+imshow(outputMatrixX); % TEST IMAGE
 figure()
 imshow(outputWedge);
 
@@ -113,7 +108,7 @@ function output = halftone(inputImage)
     right_edge_catch = false;
     % LEFT-RIGHT TRANSFORM
     for row_idx = 1:3:rows
-        waitbar(row_idx/rows,f,sprintf("Processing %.f%%", (row_idx/rows)*100));
+        waitbar(row_idx/rows,f,sprintf("Processing Halftone Transformation\n%.f%%", (row_idx/rows)*100));
         pause(0);
         right_edge_corrected = false;
         for col_idx = 1:3:cols
