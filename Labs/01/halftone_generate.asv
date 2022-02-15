@@ -42,11 +42,6 @@ https://www.mathworks.com/help/matlab/ref/waitbar.html
 
 Special characters in waitbar
 https://www.mathworks.com/matlabcentral/answers/376325-how-to-write-percentage-sign-into-a-txt-file
-
-Working with subplots
-https://www.mathworks.com/help/images/display-multiple-images.html
-
-
 %}
 
 inputMatrixA = im2uint8(imread("Fig0225(a)(face).tif"));
@@ -60,49 +55,38 @@ a grey scale "wedge" of size 256x256, whose first row is all 0, the next
 row is all 1, and so on, with the last row being 255.
 %}
 
-temp = zeros(256,256);
-inputWedge = im2uint8(temp);
+inputWedge = zeros(256,256);
+inputWedge = im2uint8(inputWedge);
 val = 256;
 for rows = 1:val
     for cols = 1:val
         inputWedge(rows,cols) = rows-1;
     end
 end
-
 outputMatrixA = halftone(inputMatrixA);
+outputMatrixB = halftone(inputMatrixB);
+outputMatrixC = halftone(inputMatrixC);
+outputMatrixX = halftone(rgb2gray(inputMatrixX)); % TEST IMAGE
+outputWedge = halftone(inputWedge);
+
 figure()
 subplot(1,2,1), imshow(imread("Fig0225(a)(face).tif"));
-title("Original");
 subplot(1,2,2), imshow(outputMatrixA);
-title("Halftone");
 
-outputMatrixB = halftone(inputMatrixB);
 figure()
 subplot(1,2,1), imshow(imread("Fig0225(b)(cameraman).tif"));
-title("Original");
 subplot(1,2,2), imshow(outputMatrixB);
-title("Halftone");
 
-outputMatrixC = halftone(inputMatrixC);
 figure()
 subplot(1,2,1), imshow(imread("Fig0225(c)(crowd).tif"));
-title("Original");
 subplot(1,2,2), imshow(outputMatrixC);
-title("Halftone");
 
-outputMatrixX = halftone(rgb2gray(inputMatrixX)); % TEST IMAGE
 figure()
-subplot(1,2,1), imshow(imread("test.jpg"));
-title("Original");
+subplot(1,2,1), imshow(imread("Fig0225(a)(face).tif"));
 subplot(1,2,2), imshow(outputMatrixX);
-title("Halftone");
 
-outputWedge = halftone(inputWedge);
 figure()
-subplot(1,2,1), imshow(inputWedge);
-title("Original");
-subplot(1,2,2), imshow(outputWedge);
-title("Halftone");
+subplot(1,2,1), imshow(i)
 
 % imshow(outputMatrixA);
 % figure()
@@ -337,9 +321,5 @@ function output = halftone(inputImage)
         end
     end
     delete(f)
-    if (kill==false)
-        output = imbinarize(A);
-    else
-        output = A;
-    end
+    output = imbinarize(A);
 end
