@@ -124,40 +124,52 @@ end
 % end
 %%
 
-outputMatrixA = halftone(inputMatrixA);
-figure()
-subplot(1,2,1), imshow(imread("Fig0225(a)(face).tif"));
-title("Original");
-subplot(1,2,2), imshow(outputMatrixA);
-title("Halftone");
+% outputMatrixA = halftone(inputMatrixA);
+% figure()
+% imshow(imread("Fig0225(a)(face).tif"));
+% title("Original");
+% pause(0.3)
+% figure()
+% imshow(outputMatrixA);
+% title("Halftone");
+% pause(0.3)
 
-outputMatrixB = halftone(inputMatrixB);
-figure()
-subplot(1,2,1), imshow(imread("Fig0225(b)(cameraman).tif"));
-title("Original");
-subplot(1,2,2), imshow(outputMatrixB);
-title("Halftone");
-
-outputMatrixC = halftone(inputMatrixC);
-figure()
-subplot(1,2,1), imshow(imread("Fig0225(c)(crowd).tif"));
-title("Original");
-subplot(1,2,2), imshow(outputMatrixC);
-title("Halftone");
+% outputMatrixB = halftone(inputMatrixB);
+% figure()
+% imshow(imread("Fig0225(b)(cameraman).tif"));
+% title("Original");
+% pause(0.3)
+% figure()
+% imshow(outputMatrixB);
+% title("Halftone");
+% pause(0.3)
+% 
+% outputMatrixC = halftone(inputMatrixC);
+% figure()
+% imshow(imread("Fig0225(c)(crowd).tif"));
+% title("Original");
+% pause(0.3)
+% figure()
+% imshow(outputMatrixC);
+% title("Halftone");
+% pause(0.3)
 
 outputWedge = halftone(inputWedge);
 figure()
-subplot(1,2,1), imshow(inputWedge);
+imshow(inputWedge);
 title("Original");
-subplot(1,2,2), imshow(outputWedge);
+pause(0.3)
+figure()
+imshow(outputWedge);
 title("Halftone");
+pause(0.3)
 
-% outputMatrixX = halftone(rgb2gray(inputMatrixX)); % TEST IMAGE
-% figure()
-% subplot(1,2,1), imshow(imread("test4.jpg"));
-% title("Original");
-% subplot(1,2,2), imshow(outputMatrixX);
-% title("Halftone");
+outputMatrixX = halftone(rgb2gray(inputMatrixX)); % TEST IMAGE
+figure()
+subplot(1,2,1), imshow(imread("test4.jpg"));
+title("Original");
+subplot(1,2,2), imshow(outputMatrixX);
+title("Halftone");
 
 % outputMatrixX2 = halftone(rgb2gray(inputMatrixX2)); % TEST IMAGE
 % figure()
@@ -168,6 +180,22 @@ title("Halftone");
 
 %% FUNCTION SCRIPT
 function output = halftone(inputImage)
+    %{
+    halftone  Converts a grayscale image to a binary image by using binary dot patterns to 
+    render grayscale values.
+    Syntax: 
+        out = halftone(in) 
+     
+    Input: 
+        in = the grayscale image to be rendered. It should be of type uint8 and have values in the range 0-255.
+      
+    Output: 
+        out = the rendered binary image. It is of type uint8 and will have two values: 0 and 255. 
+     
+    History: 
+        See GitHub commit history:
+        https://github.com/alejandrohsanchez/Digital-Image-Processing-Projects/commits/main
+    %}
     A = inputImage;
     % Number of pixel rows and columns in the image
     rows = size(A,1);
