@@ -99,12 +99,12 @@ title("Original");
 subplot(1,2,2), imshow(outputWedge);
 title("Halftone");
 
-outputMatrixX = halftone(rgb2gray(inputMatrixX)); % TEST IMAGE
-figure()
-subplot(1,2,1), imshow(imread("test3.png"));
-title("Original");
-subplot(1,2,2), imshow(outputMatrixX);
-title("Halftone");
+% outputMatrixX = halftone(rgb2gray(inputMatrixX)); % TEST IMAGE
+% figure()
+% subplot(1,2,1), imshow(imread("test3.png"));
+% title("Original");
+% subplot(1,2,2), imshow(outputMatrixX);
+% title("Halftone");
 
 %% FUNCTION SCRIPT
 function output = halftone(inputImage)
@@ -154,26 +154,27 @@ function output = halftone(inputImage)
             if (col_idx+2<=cols)
                 currentTick = currentTick + 9;
                 % Normal preparation for transform
-                PXL_AVG = mean(A(row_idx:row_idx+2,col_idx:col_idx+2), "all");
-                if (PXL_AVG>0 && PXL_AVG<=25)
+                % Linear Interpolation Method
+                PXL_AVG = floor((mean(A(row_idx:row_idx+2,col_idx:col_idx+2), "all")/255)*10);
+                if (PXL_AVG==0)
                     A(row_idx:row_idx+2,col_idx:col_idx+2) = dot9;
-                elseif (PXL_AVG>=26 && PXL_AVG<=51)
+                elseif (PXL_AVG==1)
                     A(row_idx:row_idx+2,col_idx:col_idx+2) = dot8;
-                elseif (PXL_AVG>=52 && PXL_AVG<=77)
+                elseif (PXL_AVG==2)
                     A(row_idx:row_idx+2,col_idx:col_idx+2) = dot7;
-                elseif (PXL_AVG>=78 && PXL_AVG<=103)
+                elseif (PXL_AVG==3)
                     A(row_idx:row_idx+2,col_idx:col_idx+2) = dot6;
-                elseif (PXL_AVG>=104 && PXL_AVG<=129)
+                elseif (PXL_AVG==4)
                     A(row_idx:row_idx+2,col_idx:col_idx+2) = dot5;
-                elseif (PXL_AVG>=130 && PXL_AVG<=155)
+                elseif (PXL_AVG==5)
                     A(row_idx:row_idx+2,col_idx:col_idx+2) = dot4;
-                elseif (PXL_AVG>=156 && PXL_AVG<=181)
+                elseif (PXL_AVG==6)
                     A(row_idx:row_idx+2,col_idx:col_idx+2) = dot3;
-                elseif (PXL_AVG>=182 && PXL_AVG<=207)
+                elseif (PXL_AVG==7)
                     A(row_idx:row_idx+2,col_idx:col_idx+2) = dot2;
-                elseif (PXL_AVG>=208 && PXL_AVG<=233)
+                elseif (PXL_AVG==8)
                     A(row_idx:row_idx+2,col_idx:col_idx+2) = dot1;
-                elseif (PXL_AVG>=234 && PXL_AVG<=255)
+                elseif (PXL_AVG==9)
                     A(row_idx:row_idx+2,col_idx:col_idx+2) = dot0;
                 end
             else
@@ -207,26 +208,26 @@ function output = halftone(inputImage)
                 end
                 waitbar(progress,f,sprintf("Cleaning Right Edge %.f%%", (currentTick/localTicks)*100));
                 currentTick = currentTick + (3 * c_remain);
-                PXL_AVG = mean(A(row_idx:row_idx+2,col_idx:col_idx+c_remain-1), "all");
-                if (PXL_AVG>0 && PXL_AVG<=25)
+                PXL_AVG = floor((mean(A(row_idx:row_idx+2,col_idx:col_idx+c_remain-1), "all")/255)*10);
+                if (PXL_AVG==0)
                     A(row_idx:row_idx+2,col_idx:col_idx+c_remain-1) = dot9(:,1:c_remain);
-                elseif (PXL_AVG>=26 && PXL_AVG<=51)
+                elseif (PXL_AVG==1)
                     A(row_idx:row_idx+2,col_idx:col_idx+c_remain-1) = dot8(:,1:c_remain);
-                elseif (PXL_AVG>=52 && PXL_AVG<=77)
+                elseif (PXL_AVG==2)
                     A(row_idx:row_idx+2,col_idx:col_idx+c_remain-1) = dot7(:,1:c_remain);
-                elseif (PXL_AVG>=78 && PXL_AVG<=103)
+                elseif (PXL_AVG==3)
                     A(row_idx:row_idx+2,col_idx:col_idx+c_remain-1) = dot6(:,1:c_remain);
-                elseif (PXL_AVG>=104 && PXL_AVG<=129)
+                elseif (PXL_AVG==4)
                     A(row_idx:row_idx+2,col_idx:col_idx+c_remain-1) = dot5(:,1:c_remain);
-                elseif (PXL_AVG>=130 && PXL_AVG<=155)
+                elseif (PXL_AVG==5)
                     A(row_idx:row_idx+2,col_idx:col_idx+c_remain-1) = dot4(:,1:c_remain);
-                elseif (PXL_AVG>=156 && PXL_AVG<=181)
+                elseif (PXL_AVG==6)
                     A(row_idx:row_idx+2,col_idx:col_idx+c_remain-1) = dot3(:,1:c_remain);
-                elseif (PXL_AVG>=182 && PXL_AVG<=207)
+                elseif (PXL_AVG==7)
                     A(row_idx:row_idx+2,col_idx:col_idx+c_remain-1) = dot2(:,1:c_remain);
-                elseif (PXL_AVG>=208 && PXL_AVG<=233)
+                elseif (PXL_AVG==8)
                     A(row_idx:row_idx+2,col_idx:col_idx+c_remain-1) = dot1(:,1:c_remain);
-                elseif (PXL_AVG>=234 && PXL_AVG<=255)
+                elseif (PXL_AVG==9)
                     A(row_idx:row_idx+2,col_idx:col_idx+c_remain-1) = dot0(:,1:c_remain);
                 end
             end
@@ -250,26 +251,26 @@ function output = halftone(inputImage)
                 end
                 waitbar(progress,f,sprintf("Cleaning Bottom Edge %.f%%", (currentTick/localTicks)*100));
                 currentTick = currentTick + (3 * r_remain);
-                PXL_AVG = mean(A(row_idx:row_idx+r_remain-1,col_idx:col_idx+2), "all");
-                if (PXL_AVG>0 && PXL_AVG<=25)
+                PXL_AVG = floor((mean(A(row_idx:row_idx+r_remain-1,col_idx:col_idx+2), "all")/255)*10);
+                if (PXL_AVG==0)
                     A(row_idx:row_idx+r_remain-1,col_idx:col_idx+2) = dot9(1:r_remain,:);
-                elseif (PXL_AVG>=26 && PXL_AVG<=51)
+                elseif (PXL_AVG==1)
                     A(row_idx:row_idx+r_remain-1,col_idx:col_idx+2) = dot8(1:r_remain,:);
-                elseif (PXL_AVG>=52 && PXL_AVG<=77)
+                elseif (PXL_AVG==2)
                     A(row_idx:row_idx+r_remain-1,col_idx:col_idx+2) = dot7(1:r_remain,:);
-                elseif (PXL_AVG>=78 && PXL_AVG<=103)
+                elseif (PXL_AVG==3)
                     A(row_idx:row_idx+r_remain-1,col_idx:col_idx+2) = dot6(1:r_remain,:);
-                elseif (PXL_AVG>=104 && PXL_AVG<=129)
+                elseif (PXL_AVG==4)
                     A(row_idx:row_idx+r_remain-1,col_idx:col_idx+2) = dot5(1:r_remain,:);
-                elseif (PXL_AVG>=130 && PXL_AVG<=155)
+                elseif (PXL_AVG==5)
                     A(row_idx:row_idx+r_remain-1,col_idx:col_idx+2) = dot4(1:r_remain,:);
-                elseif (PXL_AVG>=156 && PXL_AVG<=181)
+                elseif (PXL_AVG==6)
                     A(row_idx:row_idx+r_remain-1,col_idx:col_idx+2) = dot3(1:r_remain,:);
-                elseif (PXL_AVG>=182 && PXL_AVG<=207)
+                elseif (PXL_AVG==7)
                     A(row_idx:row_idx+r_remain-1,col_idx:col_idx+2) = dot2(1:r_remain,:);
-                elseif (PXL_AVG>=208 && PXL_AVG<=233)
+                elseif (PXL_AVG==8)
                     A(row_idx:row_idx+r_remain-1,col_idx:col_idx+2) = dot1(1:r_remain,:);
-                elseif (PXL_AVG>=234 && PXL_AVG<=255)
+                elseif (PXL_AVG==9)
                     A(row_idx:row_idx+r_remain-1,col_idx:col_idx+2) = dot0(1:r_remain,:);
                 end
             end
@@ -290,16 +291,16 @@ function output = halftone(inputImage)
         currentTick = currentTick + (r_remain * c_remain);
         progress = 1;
         waitbar(progress,f,sprintf("Touching Up Corners %.f%%", (currentTick/localTicks)*100));
-        PXL_AVG = mean(A(row_idx:row_idx+r_remain-1,col_idx:col_idx+c_remain-1), "all");
-        if (PXL_AVG>0 && PXL_AVG<=25)
+        PXL_AVG = floor((mean(A(row_idx:row_idx+r_remain-1,col_idx:col_idx+c_remain-1), "all")/255)*10);
+        if (PXL_AVG==0)
             A(row_idx:row_idx+r_remain-1,col_idx:col_idx+c_remain-1) = dot9(1:r_remain,1:c_remain);
-        elseif (PXL_AVG>=26 && PXL_AVG<=51)
+        elseif (PXL_AVG==1)
             A(row_idx:row_idx+r_remain-1,col_idx:col_idx+c_remain-1) = dot8(1:r_remain,1:c_remain);
-        elseif (PXL_AVG>=52 && PXL_AVG<=77)
+        elseif (PXL_AVG==2)
             A(row_idx:row_idx+r_remain-1,col_idx:col_idx+c_remain-1) = dot7(1:r_remain,1:c_remain);
-        elseif (PXL_AVG>=78 && PXL_AVG<=103)
+        elseif (PXL_AVG==3)
             A(row_idx:row_idx+r_remain-1,col_idx:col_idx+c_remain-1) = dot6(1:r_remain,1:c_remain);
-        elseif (PXL_AVG>=104 && PXL_AVG<=129)
+        elseif (PXL_AVG==)
             A(row_idx:row_idx+r_remain-1,col_idx:col_idx+c_remain-1) = dot5(1:r_remain,1:c_remain);
         elseif (PXL_AVG>=130 && PXL_AVG<=155)
             A(row_idx:row_idx+r_remain-1,col_idx:col_idx+c_remain-1) = dot4(1:r_remain,1:c_remain);
