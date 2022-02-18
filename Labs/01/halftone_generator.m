@@ -124,35 +124,35 @@ end
 % end
 %%
 
-% outputMatrixA = halftone(inputMatrixA);
-% figure()
-% imshow(imread("Fig0225(a)(face).tif"));
-% title("Original");
-% pause(0.3)
-% figure()
-% imshow(outputMatrixA);
-% title("Halftone");
-% pause(0.3)
+outputMatrixA = halftone(inputMatrixA);
+figure()
+imshow(imread("Fig0225(a)(face).tif"));
+title("Original");
+pause(0.3)
+figure()
+imshow(outputMatrixA);
+title("Halftone");
+pause(0.3)
 
-% outputMatrixB = halftone(inputMatrixB);
-% figure()
-% imshow(imread("Fig0225(b)(cameraman).tif"));
-% title("Original");
-% pause(0.3)
-% figure()
-% imshow(outputMatrixB);
-% title("Halftone");
-% pause(0.3)
-% 
-% outputMatrixC = halftone(inputMatrixC);
-% figure()
-% imshow(imread("Fig0225(c)(crowd).tif"));
-% title("Original");
-% pause(0.3)
-% figure()
-% imshow(outputMatrixC);
-% title("Halftone");
-% pause(0.3)
+outputMatrixB = halftone(inputMatrixB);
+figure()
+imshow(imread("Fig0225(b)(cameraman).tif"));
+title("Original");
+pause(0.3)
+figure()
+imshow(outputMatrixB);
+title("Halftone");
+pause(0.3)
+
+outputMatrixC = halftone(inputMatrixC);
+figure()
+imshow(imread("Fig0225(c)(crowd).tif"));
+title("Original");
+pause(0.3)
+figure()
+imshow(outputMatrixC);
+title("Halftone");
+pause(0.3)
 
 outputWedge = halftone(inputWedge);
 figure()
@@ -164,19 +164,14 @@ imshow(outputWedge);
 title("Halftone");
 pause(0.3)
 
-outputMatrixX = halftone(rgb2gray(inputMatrixX)); % TEST IMAGE
-figure()
-subplot(1,2,1), imshow(imread("test4.jpg"));
-title("Original");
-subplot(1,2,2), imshow(outputMatrixX);
-title("Halftone");
-
-% outputMatrixX2 = halftone(rgb2gray(inputMatrixX2)); % TEST IMAGE
+% INSERT A TEST IMAGE
+% outputMatrixX = halftone(rgb2gray(inputMatrixX)); % TEST IMAGE
 % figure()
-% subplot(1,2,1), imshow(imread("test5.jpg"));
+% subplot(1,2,1), imshow(imread("test.jpg"));
 % title("Original");
-% subplot(1,2,2), imshow(outputMatrixX2);
+% subplot(1,2,2), imshow(outputMatrixX);
 % title("Halftone");
+
 
 %% FUNCTION SCRIPT
 function output = halftone(inputImage)
@@ -243,8 +238,8 @@ function output = halftone(inputImage)
             if (col_idx+2<=cols)
                 currentTick = currentTick + 9;
                 % Normal preparation for transform
-                PXL_AVG = mean(A(row_idx:row_idx+2,col_idx:col_idx+2), "all");
-                if (PXL_AVG>0 && PXL_AVG<=25)
+                PXL_AVG = round(mean(A(row_idx:row_idx+2,col_idx:col_idx+2), "all"));
+                if (PXL_AVG>=0 && PXL_AVG<=25)
                     A(row_idx:row_idx+2,col_idx:col_idx+2) = dot0;
                 elseif (PXL_AVG>=26 && PXL_AVG<=51)
                     A(row_idx:row_idx+2,col_idx:col_idx+2) = dot1;
@@ -296,8 +291,8 @@ function output = halftone(inputImage)
                 end
                 waitbar(progress,f,sprintf("Cleaning Right Edge %.f%%", (currentTick/localTicks)*100));
                 currentTick = currentTick + (3 * c_remain);
-                PXL_AVG = mean(A(row_idx:row_idx+2,col_idx:col_idx+c_remain-1), "all");
-                if (PXL_AVG>0 && PXL_AVG<=25)
+                PXL_AVG = round(mean(A(row_idx:row_idx+2,col_idx:col_idx+c_remain-1), "all"));
+                if (PXL_AVG>=0 && PXL_AVG<=25)
                     A(row_idx:row_idx+2,col_idx:col_idx+c_remain-1) = dot0(:,1:c_remain);
                 elseif (PXL_AVG>=26 && PXL_AVG<=51)
                     A(row_idx:row_idx+2,col_idx:col_idx+c_remain-1) = dot1(:,1:c_remain);
@@ -339,8 +334,8 @@ function output = halftone(inputImage)
                 end
                 waitbar(progress,f,sprintf("Cleaning Bottom Edge %.f%%", (currentTick/localTicks)*100));
                 currentTick = currentTick + (3 * r_remain);
-                PXL_AVG = mean(A(row_idx:row_idx+r_remain-1,col_idx:col_idx+2), "all");
-                if (PXL_AVG>0 && PXL_AVG<=25)
+                PXL_AVG = round(mean(A(row_idx:row_idx+r_remain-1,col_idx:col_idx+2), "all"));
+                if (PXL_AVG>=0 && PXL_AVG<=25)
                     A(row_idx:row_idx+r_remain-1,col_idx:col_idx+2) = dot0(1:r_remain,:);
                 elseif (PXL_AVG>=26 && PXL_AVG<=51)
                     A(row_idx:row_idx+r_remain-1,col_idx:col_idx+2) = dot1(1:r_remain,:);
@@ -379,8 +374,8 @@ function output = halftone(inputImage)
         currentTick = currentTick + (r_remain * c_remain);
         progress = 1;
         waitbar(progress,f,sprintf("Touching Up Corners %.f%%", (currentTick/localTicks)*100));
-        PXL_AVG = mean(A(row_idx:row_idx+r_remain-1,col_idx:col_idx+c_remain-1), "all");
-        if (PXL_AVG>0 && PXL_AVG<=25)
+        PXL_AVG = round(mean(A(row_idx:row_idx+r_remain-1,col_idx:col_idx+c_remain-1), "all"));
+        if (PXL_AVG>=0 && PXL_AVG<=25)
             A(row_idx:row_idx+r_remain-1,col_idx:col_idx+c_remain-1) = dot0(1:r_remain,1:c_remain);
         elseif (PXL_AVG>=26 && PXL_AVG<=51)
             A(row_idx:row_idx+r_remain-1,col_idx:col_idx+c_remain-1) = dot1(1:r_remain,1:c_remain);
@@ -404,7 +399,7 @@ function output = halftone(inputImage)
     end
     if (kill==false)
         pause(0.3);
-        output = imbinarize(A);
+        output = A;
         delete(f)
     else
         waitbar(progress,f,sprintf("Processing Interrupted! %.f%%", (currentTick/localTicks)*100));
