@@ -54,7 +54,7 @@ https://www.mathworks.com/help/images/display-multiple-images.html
 inputMatrixA = im2uint8(imread("Fig0225(a)(face).tif"));
 inputMatrixB = im2uint8(imread("Fig0225(b)(cameraman).tif"));
 inputMatrixC = im2uint8(imread("Fig0225(c)(crowd).tif"));
-% inputMatrixX = im2uint8(imread("test4.jpg")); % TEST IMAGE
+inputMatrixX = im2uint8(imread("test.png")); % TEST IMAGE
 % inputMatrixX2 = im2uint8(imread("test5.jpg")); % TEST IMAGE
 
 %{
@@ -165,13 +165,15 @@ title("Halftone");
 pause(0.3)
 
 % INSERT A TEST IMAGE
-% outputMatrixX = halftone(rgb2gray(inputMatrixX)); % TEST IMAGE
-% figure()
-% subplot(1,2,1), imshow(imread("test.jpg"));
-% title("Original");
-% subplot(1,2,2), imshow(outputMatrixX);
-% title("Halftone");
-
+outputMatrixX = halftone(rgb2gray(inputMatrixX)); % TEST IMAGE
+figure()
+imshow(imread("test.png"));
+title("Original");
+pause(0.3)
+figure()
+imshow(outputMatrixX);
+title("Halftone");
+pause(0.3)
 
 %% FUNCTION SCRIPT
 function output = halftone(inputImage)
