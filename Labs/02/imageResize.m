@@ -21,7 +21,7 @@ function outputImage = myimresize(inputImage, inputSize, method)
     if (strcmp(method, 'nearest'))
         fprintf("Chose nearest\n");
     elseif (strcmp(method, "bilinear"))
-        fprintf("Chose bilinear")
+        fprintf("Chose bilinear\n")
     end
     outputImage = [1,1];
 
