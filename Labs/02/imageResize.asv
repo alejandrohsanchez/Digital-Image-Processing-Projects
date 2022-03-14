@@ -26,20 +26,18 @@ imshow(upSample2);
 
 % Reconstructing images
 reconDownSample1 = myimresize(downSample1, [300 300], 'nearest');
-reconDownSample2 = myimresize(downSample2, [300 300], 'bilinear');
-reconUpSample1 = myimresize(upSample1, [300 300], 'nearest');
-reconUpSample2 = myimresize(upSample2, [300 300], 'bilinear');
+reconDownSample2 = myimresize(downSample1, [300 300], 'bilinear');
+reconUpSample1 = myimresize(downSample1, [300 300], 'nearest');
+reconUpSample2 = myimresize(downSample1, [300 300], 'bilinear');
 
 % Comparing downsample tests
-rmseValue1 = myRMSE(A,reconDownSample1);
-rmseValue2 = myRMSE(A,reconDownSample2);
-fprintf("RMSE of downsampled reconstructed nearest interpolation: %f\n",rmseValue1);
-fprintf("RMSE of downsampled reconstructed bilinear interpolation: %f\n",rmseValue2);
+rmseValue1 = myRMSE(downSample1,reconDownSample1);
+rmseValue2 = myRMSE(downSample2,reconDownSample2);
+fprintf("RMSE of downsampled reconstructed nearest interpolation: %f",)
+
 % Comparing upsample tests
-rmseValue3 = myRMSE(A, reconUpSample1);
-rmseValue4 = myRMSE(A, reconUpSample2);
-fprintf("RMSE of upsampled reconstructed nearest interpolation: %f\n",rmseValue3);
-fprintf("RMSE of upsampled reconstructed bilinear interpolation: %f\n",rmseValue4);
+rmseValue3 = myRMSE(upSample1, reconUpSample1);
+rmseValue4 = myRMSE(upSample2, reconUpSample2);
 
 function output = bilinear(input, M, N)
     % This function will perform nearest neighbor interpolation.
