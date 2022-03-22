@@ -1,6 +1,22 @@
+%{
+References:
+
+The linspace() function
+https://www.mathworks.com/help/matlab/ref/linspace.html
+
+Nearest-neighbor interpolation
+https://en.wikipedia.org/wiki/Nearest-neighbor_interpolation
+
+Structure arrays in MATLAB
+https://www.mathworks.com/help/matlab/ref/struct.html
+
+Bilinear interpolation
+https://en.wikipedia.org/wiki/Bilinear_interpolation
+
+%}
+
 clear all;
 close all;
-% A = imread("imageTest.png");
 A = imread("Lab_02_image1.tif");
 A = im2uint8(A);
 
@@ -17,12 +33,16 @@ upSample2 = myimresize(A,[425 600],'bilinear');
 % Show original images
 figure()
 imshow(downSample1);
+title('Downsize to 40x75 using nearest-neighbor interpolation')
 figure()
 imshow(downSample2);
+title('Downsize to 40x75 using bilinear interpolation')
 figure()
 imshow(upSample1);
+title('Upsize to 425x600 using nearest-neighbor interpolation')
 figure()
 imshow(upSample2);
+title('Upsize to 425x600 using bilinear interpolation')
 
 % Reconstructing images
 reconDownSample1 = myimresize(downSample1, [300 300], 'nearest');
@@ -41,6 +61,15 @@ rmseValue4 = myRMSE(A, reconUpSample2);
 fprintf("RMSE of upsampled reconstructed nearest interpolation: %f\n",rmseValue3);
 fprintf("RMSE of upsampled reconstructed bilinear interpolation: %f\n",rmseValue4);
 
+%{
+This is the bilinear routine. This function is called from
+the "myimresize" routine and performs up- and down-sampling
+procedures. The routine takes an input image (type uint8),
+and integer values M and N. M represents the number of rows
+in the new image and N represents the number of columns in
+the new image. The result of the transformation is stored
+in "output" and is returned to "myimresize".
+%}
 function output = bilinear(input, M, N)
     % This function will perform nearest neighbor interpolation.
     Im1.rows = size(input,1); Im1.cols = size(input,2);
@@ -48,7 +77,7 @@ function output = bilinear(input, M, N)
     % Create the first instance of the output array
     output = zeros(Im2.rows, Im2.cols);
     % We will want to floor these values (rowCoords and colCoords)
-    rowCoords=floor(linspace(1,Im2.rows,Im1.rows)); colCoords=floor(linspace(1,Im2.cols,Im1.cols));
+    rowCoords=round(linspace(1,Im2.rows,Im1.rows)); colCoords=round(linspace(1,Im2.cols,Im1.cols));
     
     for x=1:Im2.rows
         for i=2:length(rowCoords)
@@ -89,6 +118,15 @@ function output = bilinear(input, M, N)
     output=uint8(output);
 end
 
+%{
+This is the nearest routine. This function is called from the
+"myimresize" routine and performs up- and down-sampling
+procedures. The routine takes an input image (type uint8),
+and integer values M and N. M represents the number of rows
+in the new image and N represents the number of columns in
+the new image. The result of the transformation is stored
+in "output" and is returned to "myimresize".
+%}
 function output = nearest(input, M, N)
     % This function will perform nearest neighbor interpolation.
     Im1.rows = size(input,1); Im1.cols = size(input,2);
@@ -96,7 +134,7 @@ function output = nearest(input, M, N)
     % Create the first instance of the output array
     output = zeros(Im2.rows, Im2.cols);
     % We will want to floor these values (rowCoords and colCoords)
-    rowCoords=floor(linspace(1,Im2.rows,Im1.rows)); colCoords=floor(linspace(1,Im2.cols,Im1.cols));
+    rowCoords=round(linspace(1,Im2.rows,Im1.rows)); colCoords=round(linspace(1,Im2.cols,Im1.cols));
     
     for x=1:Im2.rows
         for y=1:Im2.cols
@@ -107,7 +145,7 @@ function output = nearest(input, M, N)
                 if (x>=last_i_Val && x<=i_midpoint)
                     x_idx=i-1;
                     break;
-                elseif (x>i_midpoint && x<current_i_Val)
+                elseif (x>i_midpoint && x<=current_i_Val)
                     x_idx=i;
                     break;
                 end
@@ -119,7 +157,7 @@ function output = nearest(input, M, N)
                 if (y>=last_j_Val && y<=j_midpoint)
                     y_idx=j-1;
                     break;
-                elseif (y>j_midpoint && y<current_j_Val)
+                elseif (y>j_midpoint && y<=current_j_Val)
                     y_idx=j;
                     break;
                 end
@@ -130,6 +168,17 @@ function output = nearest(input, M, N)
     output = uint8(output);
 end
 
+%{
+This is the myRMSE routine. This function computes the
+root mean squared error between two images. This
+function takes input two grayscale images of the same size
+and outputs a single floating point value, the RMSE.
+RMSE is a numeric method for computing the difference between
+two images. It is used in this program to evaluate the
+effectiveness of the two image reconstruction algorithm by
+computing the pixelwise difference between the original and
+the reconstructed images.
+%}
 function value = myRMSE(Img1, Img2)
     SUM = 0;
     M=size(Img1,1);
@@ -144,6 +193,13 @@ function value = myRMSE(Img1, Img2)
     value = sqrt((1/(M*N)) * SUM);
 end
 
+
+%{
+This is the myimresize routine. This is a function that calls to other
+functions "nearest" and "bilinear" to perform up- and down-sampling
+operations. The output of each of these function calls is stored into the
+"outputImage" matrix and is returned at the end of the routine to main.
+%}
 function outputImage = myimresize(inputImage, inputSize, method)
     % Resize inputImage to get outputImage
     % inputImage = Input image, matrix
