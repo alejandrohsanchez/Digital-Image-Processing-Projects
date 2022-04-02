@@ -404,7 +404,7 @@ function output = halftone(inputImage)
         output = A;
         delete(f)
     else
-        waitbar(progress,f,sprintf("Processing Interrupted! %.f%%", (currentTick/localTicks)*100));
+        waitbar(progress,f,sprintf("Processing Interrupted! %.2f", (currentTick/localTicks)*100));
         pause(0.3);
         delete(f);
         output = A;

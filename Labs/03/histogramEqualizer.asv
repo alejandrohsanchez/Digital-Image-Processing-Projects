@@ -18,10 +18,9 @@ inputMatrix2 = imread("Lab_03_image2_light.tif");
 
 figure()
 imshow(inputMatrix1)
-mean = compute_mean(inputMatrix1);
-std_dev = compute_std_deviation(inputMatrix1);
+mean = compute_mean(output1);
+std_dev = compute_std_deviation(output1);
 fprintf("Dark image: mean = %.2f, standard deviation = %.2f\n", mean, std_dev)
-
 output1 = equalize(inputMatrix1);
 mean = compute_mean(output1);
 std_dev = compute_std_deviation(output1);
@@ -29,14 +28,7 @@ fprintf("Equalized image: mean = %.2f, standard deviation = %.2f\n", mean, std_d
 
 figure()
 imshow(inputMatrix2)
-mean = compute_mean(inputMatrix2);
-std_dev = compute_std_deviation(inputMatrix2);
-fprintf("Light image: mean = %.2f, standard deviation = %.2f\n", mean, std_dev)
-
 output2 = equalize(inputMatrix2);
-mean = compute_mean(output2);
-std_dev = compute_std_deviation(output2);
-fprintf("Equalized image: mean = %.2f, standard deviation = %.2f\n", mean, std_dev)
 
 function mean = compute_mean(I)
     M=size(I,1); N=size(I,2); S = 0; I=double(I);
