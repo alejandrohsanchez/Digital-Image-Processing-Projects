@@ -11,7 +11,8 @@ https://www.mathworks.com/help/matlab/ref/sum.html
 Bar graph in MATLAB
 https://www.mathworks.com/help/matlab/ref/bar.html
 
-
+Standard deviation
+https://www.scribbr.com/statistics/standard-deviation/
 %}
 inputMatrix1 = imread("Lab_03_image1_dark.tif");
 inputMatrix2 = imread("Lab_03_image2_light.tif");
