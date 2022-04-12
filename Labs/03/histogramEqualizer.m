@@ -23,6 +23,8 @@ inputMatrix2 = imread("Lab_03_image2_light.tif");
 
 figure()
 imshow(inputMatrix1)
+title("Dark Image")
+saveas(gcf,"DarkImage.png")
 mean = compute_mean(inputMatrix1);
 std_dev = compute_std_deviation(inputMatrix1);
 fprintf("Dark image: mean = %.2f, standard deviation = %.2f\n", mean, std_dev)
@@ -34,6 +36,8 @@ fprintf("Equalized image: mean = %.2f, standard deviation = %.2f\n", mean, std_d
 
 figure()
 imshow(inputMatrix2)
+title("Light Image")
+saveas(gcf,"LightImage.png")
 mean = compute_mean(inputMatrix2);
 std_dev = compute_std_deviation(inputMatrix2);
 fprintf("Light image: mean = %.2f, standard deviation = %.2f\n", mean, std_dev)
@@ -42,6 +46,12 @@ output2 = equalize(inputMatrix2);
 mean = compute_mean(output2);
 std_dev = compute_std_deviation(output2);
 fprintf("Equalized image: mean = %.2f, standard deviation = %.2f\n", mean, std_dev)
+
+original = imread("Lab_03_image_original.tif");
+figure()
+imshow(original);
+title("Original Image")
+saveas(gcf,"OriginalImage.png")
 
 function mean = compute_mean(I)
     M=size(I,1); N=size(I,2); S = 0; I=double(I);
@@ -78,6 +88,7 @@ function plot_histogram(h)
     bar(x,h);
     xlabel('intensity value'); ylabel('PMF');
     xlim([0,max(x)]); ylim([0, max(h)]);
+    title("Histogram")
 end
 
 %{
