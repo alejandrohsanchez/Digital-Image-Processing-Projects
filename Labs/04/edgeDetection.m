@@ -23,9 +23,11 @@ imshow(inputMatrix);
 scalar = 1;
 while (scalar ~= -1)
     scalar = input("Enter a scalar value (-1 to quit): ");
-    finalImage = find_edges(inputMatrix,scalar);
-    figure()
-    imshow(finalImage);
+    if (scalar ~= -1)
+        finalImage = find_edges(inputMatrix,scalar);
+        figure()
+        imshow(finalImage);
+    end
 end
 fprintf("Exiting program...\n\n")
 
