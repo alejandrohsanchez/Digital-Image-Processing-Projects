@@ -2,6 +2,20 @@ clc;
 close all;
 clear all;
 
+%{
+Linear Spatial Filtering
+https://www.math.uci.edu/icamp/courses/math77c/demos/linear_spatial_filtering.pdf
+
+Image Gradient Wikipedia
+https://en.wikipedia.org/wiki/Image_gradient
+
+Sobel Operator Wikipedia
+https://en.wikipedia.org/wiki/Sobel_operator
+
+What is zero padding
+https://www.icsid.org/uncategorized/what-is-zero-padding-in-image-processing/
+%}
+
 % Define the input image
 inputMatrix = imread("watertower.tif");
 figure()
@@ -19,6 +33,11 @@ fprintf("Exiting program...\n\n")
 % testMatrix = randi(10,10,10);
 % resultMatrix = spatial_filter(testMatrix, filterToApply);
 
+%{
+This is the find_edges function. It takes an input matrix of
+type uint8 and a scalar value between 0 and 255, then returns a
+gradient image. The return value is type uint8.
+%}
 function resultingImage = find_edges(inputImage, scalar)
     % Call gradient magnitude function
     magnitude = gradient_magnitude(inputImage);
@@ -39,7 +58,9 @@ function resultingImage = find_edges(inputImage, scalar)
 end
 
 %{
-The gradient_magnitude function returns the magnitude of the inputImage
+This is the gradient_magnitude function. It takes a matrix of
+type uint8 as an argument and returns a matrix of type double.
+It returns the magnitude of the gradient of an image.
 %}
 function magnitude = gradient_magnitude(inputImage)
     % Define the sobel masks
@@ -63,7 +84,10 @@ function magnitude = gradient_magnitude(inputImage)
 end
 
 %{
-The spatial_filter function returns a double
+This is the spatial_filter function. It takes a matrix of type
+uint8 and a filter mask as arguments and returns a matrix of type
+double. It returns an image copy of the input image after a
+filter is applied to its values.
 %}
 function outputImage = spatial_filter(inputImage, filterMatrix)
     M = size(inputImage,1);
